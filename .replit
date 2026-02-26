@@ -1,0 +1,262 @@
+entrypoint = "ui.py"
+modules = ["python-3.11"]
+
+run = "streamlit run ui.py --server.port 3000 --server.address 0.0.0.0"
+
+[nix]
+channel = "stable-24_05"
+
+[unitTest]
+language = "python3"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[deployment]
+run = ["python3", "main.py"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[workflows]
+runButton = "Test Domain Jump"
+
+[[workflows.workflow]]
+name = "Resume UI"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "streamlit run resume_ui.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Resume View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/resume_view.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Main App"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run main.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Role Detail View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/role_detail_view.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Content View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/content_view.py --server.port 3000 --server.address 0.0.0.0 --server.baseUrlPath=\"\" --server.headless true"
+
+[[workflows.workflow]]
+name = "Test Content Agent"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_content_agent.py"
+
+[[workflows.workflow]]
+name = "Test Query Planner"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_query_planner.py"
+
+[[workflows.workflow]]
+name = "Test Perplexity"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_perplexity.py"
+
+[[workflows.workflow]]
+name = "Test Retrieval Orchestrator"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_retrieval_orchestrator.py"
+
+[[workflows.workflow]]
+name = "Test Learning Path"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_learning_path.py"
+
+[[workflows.workflow]]
+name = "Test Role Context"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_role_context.py"
+
+[[workflows.workflow]]
+name = "Role Context View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/role_context_view.py --server.port 3000 --server.address 0.0.0.0 --server.headless true --server.enableWebsocketCompression=false"
+
+[[workflows.workflow]]
+name = "Learning Path View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/learning_path_view.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Test Learning Steps"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_learning_steps.py"
+
+[[workflows.workflow]]
+name = "Test Cultural Utils"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_cultural_utils.py"
+
+[[workflows.workflow]]
+name = "Test Cultural Alignment"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_cultural_alignment_view.py"
+
+[[workflows.workflow]]
+name = "Test Tone Profile"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_tone_profile.py"
+
+[[workflows.workflow]]
+name = "Cultural Alignment View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/cultural_alignment_view.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Test Aspiration View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/aspiration_view.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Test Tool Familiarity"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_tool_familiarity_agent.py"
+
+[[workflows.workflow]]
+name = "Test Resume Context View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/resume_view.py --server.port 3000 --server.address 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Tool Familiarity View"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run pages/tool_familiarity_view.py --server.port 3000 --server.address 0.0.0.0 --server.headless true --server.enableWebsocketCompression=false"
+
+[[workflows.workflow]]
+name = "Test Tool Familiarity View"
+mode = "sequential"
+author = 21639534
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace streamlit run sandbox/test_tool_familiarity_view.py --server.port 3000 --server.address 0.0.0.0 --server.headless true --server.enableWebsocketCompression=false"
+
+[[workflows.workflow]]
+name = "Test Skill Assessment"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python sandbox/test_skill_assessment_agent.py"
+
+[[workflows.workflow]]
+name = "Test Role Ladder"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_role_ladder_agent.py"
+
+[[workflows.workflow]]
+name = "Test Domain Jump"
+author = 21639534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PYTHONPATH=/home/runner/workspace python sandbox/test_domain_jump_analysis_prompt.py"
+
+[agent]
+expertMode = true
+integrations = ["github:1.0.0"]

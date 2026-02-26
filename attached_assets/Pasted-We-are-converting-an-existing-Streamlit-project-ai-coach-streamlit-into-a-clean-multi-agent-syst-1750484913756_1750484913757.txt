@@ -1,0 +1,87 @@
+We are converting an existing Streamlit project (“ai-coach-streamlit”) into a clean multi-agent system.
+Two hard rules:
+
+Only three JSON blobs serve as contracts between layers
+
+user_current_capabilities – skills/tools/roles/confidence (schema in schemas/user_current_capabilities.schema.json)
+
+user_target_role_profile – target role profile (schema exists)
+
+user_gap_analysis – missing skills + priority (schema exists)
+
+Tools are memory-free pure functions.
+
+They never read/write global_agent_memory.
+
+Orchestrators handle all memory IO via services/memory_store.save_blob / load_blob.
+
+Tools accept explicit arguments for any upstream data they need and return a dict that validates against one of the three schemas.
+
+Folder layout now
+
+pgsql
+Copy
+Edit
+tools/                      # pure extractors
+  resume/                   # already refactored (see below)
+  linkedin/
+  role_context_agent/
+  role_detail/
+  tool_familiarity_agent/
+  cultural_alignment_agent/
+orchestrators/              # high-level agents
+schemas/                    # three JSON-Schema files (already present)
+services/
+  memory_store.py           # wrapper around global_agent_memory
+  schema_loader.py          # loads & validates JSON schema
+tools/tool_registry.py      # maps string name → callable
+Example of a completed refactor (resume tool)
+File: tools/resume/resume_agent.py now looks like:
+
+python
+Copy
+Edit
+from services.schema_loader import validate_payload
+
+def analyze_resume(user_id: str, session_id: str, resume_text: str | None = None) -> dict:
+    # existing LLM-prompt logic kept intact …
+    parsed = {
+        "skills": ["Python", "SQL"],
+        "tools": ["Tableau"],
+        "roles": ["Data Analyst"],
+        "confidence": 0.85
+    }
+    validate_payload("user_current_capabilities.schema.json", parsed)
+    return parsed
+📌 Notice:
+
+No retrieve_memory or store_memory calls.
+
+Output keys exactly match the Current-Capabilities schema.
+
+YOUR TASK for each remaining extractor folder inside tools/:
+
+Remove all direct memory calls.
+
+Accept needed upstream data via function parameters (e.g., resume_caps, linkedin_caps).
+
+Produce a dict compliant with one of the three schemas and call validate_payload(...).
+
+Do not log to memory; orchestrators will do that later.
+
+Update tools/tool_registry.py by adding an entry:
+
+python
+Copy
+Edit
+from tools.<folder>.<file> import <main_func>
+REGISTRY["<unique_name>"] = <main_func>
+Deliverable format:
+
+For each tool, output the full new .py file contents.
+
+Indicate any new function signatures so orchestrators can call them.
+
+Do not modify prompts except to replace memory look-ups with the passed-in arguments.
+
+Begin with the LinkedIn extractor (tools/linkedin/linkedin_agent.py) then proceed to role context, role detail, tool familiarity, cultural alignment in that order.

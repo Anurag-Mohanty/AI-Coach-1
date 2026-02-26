@@ -1,0 +1,18 @@
+{
+  "demo_user": {
+    "preferred_tone": "Clear, step-by-step tactical instructions (direct and actionable)",
+    "tone_style": "Directive / Tactical",
+    "tone_topic": "explaining a concept to a team",
+    "work_style_notes": "",
+    "aspiration_cluster": "Cloud-focused mid-career engineers",
+    "target_role": "IC4 - Senior Software Engineer"
+  },
+  "test_user": {
+    "aspiration_cluster": "Backend-focused mid-career developers",
+    "target_role": "IC4 - Senior Software Engineer"
+  },
+  "test_user_2": {
+    "aspiration_cluster": "HealthTech-focused mid-career PMs",
+    "target_role": "IC5 - Group Product Manager"
+  }
+}

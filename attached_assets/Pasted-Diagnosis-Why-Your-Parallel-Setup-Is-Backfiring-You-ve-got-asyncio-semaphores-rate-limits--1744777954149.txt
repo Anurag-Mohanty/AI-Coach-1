@@ -1,0 +1,138 @@
+Diagnosis: Why Your Parallel Setup Is Backfiring
+You’ve got:
+
+✅ asyncio ✅ semaphores ✅ rate limits ✅ batching ✅ pooling
+But you're still facing:
+
+❌ WebSocket failures
+
+❌ Tasks executing sequentially
+
+❌ Rate limits hurting more than helping
+
+This usually points to one (or more) of the following:
+
+❗ Problem 1: asyncio Isn’t Really Running in Parallel
+Some libraries you're using (especially those involving LLMs or browser-based fetches like Perplexity or YouTube scraping) may not be truly async.
+
+❗ Example: requests is blocking; httpx is async. Likewise, some LLM wrappers only simulate async but still wait under the hood.
+
+🧠 Fix: Audit all your I/O calls. Every external fetch must be an async def using an actual async library (aiohttp, httpx, etc.). No sync wrappers.
+
+❗ Problem 2: Too Many Layered Limits
+You're stacking:
+
+Concurrency limits (4)
+
+Batch size (2)
+
+Rate per source (2)
+
+Sleep per request (0.5s)
+
+Sleep per batch (1s)
+
+➡️ This converts your async pipeline into a slow, throttled waterfall. Each layer of delay compounds the slowness.
+
+🧠 Fix:
+
+Cut batch size to 1, remove sleep(1s) between batches
+
+Rely on token bucket-style throttling, not batch sleep
+
+Replace fixed sleeps with smarter async rate limiters (see below)
+
+❗ Problem 3: WebSocket Errors from Client Saturation
+WebSockets are fragile under:
+
+Long-lived connections
+
+Sudden bursts
+
+Concurrent fetches from multiple tabs/users
+
+🧠 Fix:
+
+Use keep-alive pings and heartbeat mechanisms (e.g., in websockets or aiohttp)
+
+Switch from WebSockets to REST where possible for external APIs
+
+If you must use WebSockets, isolate them on separate threads or processes
+
+🛠️ Solutions: Practical Fixes You Can Implement
+✅ 1. Use aiohttp or httpx.AsyncClient with Proper Session Management
+Instead of creating a new session every time, do:
+
+python
+Copy
+Edit
+async with httpx.AsyncClient(timeout=30.0) as client:
+    results = await asyncio.gather(
+        fetch_github(client),
+        fetch_youtube(client),
+        fetch_perplexity(client),
+    )
+Don’t create a new client in each fetch function. Reuse the same one across all.
+
+✅ 2. Implement Smarter Rate Limiting with aiolimiter
+bash
+Copy
+Edit
+pip install aiolimiter
+Then:
+
+python
+Copy
+Edit
+from aiolimiter import AsyncLimiter
+
+# Allow 2 requests per second per source
+github_limiter = AsyncLimiter(2, 1)
+
+async def fetch_github(client):
+    async with github_limiter:
+        return await client.get("https://api.github.com/search?q=xyz")
+➡️ This replaces the need for asyncio.sleep() entirely. Much cleaner.
+
+✅ 3. Profile Real Concurrency with asyncio.TaskGroup (3.11+) or trio
+If you're on Python 3.11:
+
+python
+Copy
+Edit
+async with asyncio.TaskGroup() as tg:
+    tg.create_task(fetch_github(client))
+    tg.create_task(fetch_youtube(client))
+Or if you want a more modern, robust async model: use trio. It's more predictable than asyncio for heavy parallel systems.
+
+✅ 4. Switch from WebSockets to REST for Perplexity or LinkedIn
+Unless you're doing live chat or streaming — WebSockets are a huge reliability drag.
+
+🧠 Strategy:
+
+Use WebSockets only for LLM streaming
+
+For static content, use standard async HTTP
+
+If Perplexity doesn't support REST well, proxy it once, cache, and reuse.
+
+✅ 5. Add a Task Orchestrator Layer (Queueing, Retry, Monitoring)
+Use a controller:
+
+Limit to N active tasks globally
+
+Retry failed tasks with backoff
+
+Log each task timing + outcome
+
+This avoids cascade failures and improves debugging.
+
+🧭 TL;DR Action Plan
+
+Step	Action
+✅ 1	Confirm every external call is using a true async lib (aiohttp, httpx, openai.AsyncClient)
+✅ 2	Replace sleep-based limits with aiolimiter or anyio.CapacityLimiter
+✅ 3	Remove batching logic — let asyncio.gather() + limiter handle pacing
+✅ 4	Use shared connection pools (not one client per request)
+✅ 5	Add retry with exponential backoff (esp. for WebSocket APIs)
+✅ 6	Offload flaky WebSocket sources to background task queue (or switch to REST)

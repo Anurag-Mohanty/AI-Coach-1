@@ -1,0 +1,5 @@
+{"timestamp": "2025-04-03 18:29:17.227180", "error": "generate_why_this_output_summary() missing 3 required positional arguments: 'input_summary', 'rules_used', and 'model_confidence'"}
+{"timestamp": "2025-04-03 18:30:17.749221", "error": "Expecting value: line 1 column 1 (char 0)"}
+{"timestamp": "2025-04-03 18:43:42.899375", "error": "generate_why_this_output_summary() missing 1 required positional argument: 'agent_name'"}
+{"timestamp": "2025-04-03 19:55:20.465154", "error": "'str' object has no attribute 'get'"}
+{"timestamp": "2025-04-04 03:39:22.411308", "error": "API or processing error: cannot access local variable 're' where it is not associated with a value"}

@@ -1,0 +1,147 @@
+{"timestamp": "2025-05-03 06:54:52.962070", "error": "unhashable type: 'collections.defaultdict'"}
+{"timestamp": "2025-05-03 06:54:52.962843", "error": "unhashable type: 'collections.defaultdict'"}
+{"timestamp": "2025-05-03 07:04:22.129136", "error": "type str doesn't define __round__ method"}
+{"timestamp": "2025-05-03 07:04:28.691734", "error": "type str doesn't define __round__ method"}
+{"timestamp": "2025-05-04 04:58:17.318504", "error": "type str doesn't define __round__ method"}
+{"timestamp": "2025-05-04 04:58:22.292121", "error": "type str doesn't define __round__ method"}
+{"timestamp": "2025-05-08 04:23:35.542398", "error": "'Completions' object has no attribute 'acreate'"}
+{"timestamp": "2025-05-08 04:23:35.543396", "error": "'Completions' object has no attribute 'acreate'"}
+{"timestamp": "2025-05-08 04:26:09.199494", "error": "'Completions' object has no attribute 'acreate'"}
+{"timestamp": "2025-05-08 04:26:09.199774", "error": "'Completions' object has no attribute 'acreate'"}
+{"timestamp": "2025-05-08 04:30:29.034108", "error": "Circular reference detected"}
+{"timestamp": "2025-05-08 04:30:38.417677", "error": "Circular reference detected"}
+{"timestamp": "2025-05-08 05:33:11.048386", "error": "Circular reference detected"}
+{"timestamp": "2025-05-08 05:33:15.907844", "error": "Circular reference detected"}
+{"timestamp": "2025-05-08 05:34:14.419634", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 05:34:14.560567", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 05:35:55.873045", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 05:35:56.038579", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:20:37.301095", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:20:37.447507", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:21:42.654825", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:21:42.813472", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:23:52.935648", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:25:46.449606", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:29:03.108827", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:31:12.614436", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:34:17.419907", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:35:15.927180", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:40:09.424667", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-08 06:48:07.281900", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:08:27.892480", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:09:35.616213", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:11:01.354446", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:11:47.357314", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:12:53.245885", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:13:31.926210", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:15:08.509871", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:15:55.755029", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:15:55.896183", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:19:00.114082", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:19:00.263767", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:21:52.358486", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:21:52.511003", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:24:22.224461", "error": "Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:32:26.896693", "error": "'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 04:32:37.367504", "error": "'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 04:33:33.493791", "error": "Circular reference detected"}
+{"timestamp": "2025-05-09 04:37:04.849665", "error": "Circular reference detected"}
+{"timestamp": "2025-05-09 04:39:17.263917", "error": "Role ladder inference failed: Invalid format specifier ' \"string (e.g. IC3, IC4, M1)\",\n    \"next_logical_level\": \"string (next progression step)\",\n    \"seniority_score\": \"integer 0-100\",\n    \"progression_velocity\": \"string (Stalled/Moderate/Accelerated)\",\n    \"ladder_alignment_flag\": \"string (Aligned/Misaligned/Unclear)\",\n    \"normalization_explanation\": \"string (brief explanation)\",\n    \"management_signal\": \"string (IC/Management/Hybrid)\"\n' for object of type 'str'"}
+{"timestamp": "2025-05-09 04:39:17.264198", "error": "Role ladder inference failed: Invalid format specifier ' \"string (e.g. IC3, IC4, M1)\",\n    \"next_logical_level\": \"string (next progression step)\",\n    \"seniority_score\": \"integer 0-100\",\n    \"progression_velocity\": \"string (Stalled/Moderate/Accelerated)\",\n    \"ladder_alignment_flag\": \"string (Aligned/Misaligned/Unclear)\",\n    \"normalization_explanation\": \"string (brief explanation)\",\n    \"management_signal\": \"string (IC/Management/Hybrid)\"\n' for object of type 'str'"}
+{"timestamp": "2025-05-09 04:44:44.569881", "error": "Role ladder inference failed: Invalid format specifier ' \"string (e.g. IC3, IC4, M1)\",\n    \"next_logical_level\": \"string (next progression step)\",\n    \"seniority_score\": \"integer 0-100\",\n    \"progression_velocity\": \"string (Stalled/Moderate/Accelerated)\",\n    \"ladder_alignment_flag\": \"string (Aligned/Misaligned/Unclear)\",\n    \"normalization_explanation\": \"string (brief explanation)\",\n    \"management_signal\": \"string (IC/Management/Hybrid)\"\n' for object of type 'str'"}
+{"timestamp": "2025-05-09 04:46:12.396225", "error": "Role ladder inference failed: Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:51:25.946738", "error": "Role ladder inference failed: Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:52:20.763544", "error": "Role ladder inference failed: Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:55:59.427232", "error": "Role ladder inference failed: Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:57:34.899395", "error": "Role ladder inference failed: Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 04:59:02.073810", "error": "Role ladder inference failed: Error code: 400 - {'error': {'message': \"Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}"}
+{"timestamp": "2025-05-09 05:00:26.460977", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:02:48.691701", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:04:24.629859", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:07:21.374466", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:08:52.209859", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:15:25.794706", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:22:44.358986", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:48:38.400257", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:52:23.968105", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:52:37.136099", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 05:52:58.349066", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 13:54:31.776028", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 13:56:13.455583", "error": "Role ladder inference failed: Circular reference detected"}
+{"timestamp": "2025-05-09 19:20:15.211361", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:22:04.251718", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:22:36.854991", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:23:17.148471", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:28:46.747050", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:30:55.887405", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:32:47.676983", "error": "Role ladder inference failed: 'coroutine' object has no attribute 'get'"}
+{"timestamp": "2025-05-09 19:38:48.341436", "error": "Role ladder inference failed: learn_from_feedback() missing 1 required positional argument: 'input_fields'"}
+{"timestamp": "2025-05-09 19:45:10.637170", "error": "Role ladder inference failed: store_memory() missing 1 required positional argument: 'input_fields'"}
+{"timestamp": "2025-05-09 19:46:49.356062", "error": "Role ladder inference failed: Extra data: line 10 column 1 (char 217)"}
+{"timestamp": "2025-05-09 19:46:53.984292", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:46:57.630205", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:47:03.245882", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:50:53.051667", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:50:57.210904", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:51:01.180601", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:51:05.487636", "error": "Role ladder inference failed: type str doesn't define __round__ method"}
+{"timestamp": "2025-05-09 19:56:25.393929", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 19:56:25.395745", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 19:56:25.396223", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 19:56:25.396521", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:22:28.978201", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:22:28.998141", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:22:28.999245", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:22:28.999516", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:34.311642", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:34.315348", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:34.315774", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:34.316130", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:59.427825", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:59.430466", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:59.430890", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:23:59.431189", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:25:12.464312", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:25:12.466367", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:25:12.466801", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:25:12.467083", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:35:05.395538", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:35:05.421048", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:35:05.421996", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-09 20:35:05.422309", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 04:59:34.638709", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 04:59:34.662646", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 04:59:34.663264", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 04:59:34.663643", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:57:29.140652", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:57:29.165915", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:57:29.166572", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:57:29.166932", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:59:26.037581", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:59:26.039840", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:59:26.042541", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 05:59:26.043581", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:05:30.367193", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:05:30.369515", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:05:30.370583", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:05:30.373620", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:35:08.012310", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:35:08.014986", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:35:08.018094", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 06:35:08.019189", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 07:16:35.168684", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 07:16:35.171620", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 07:16:35.172395", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-10 07:16:35.175103", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:37.391429", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:37.421244", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:37.423819", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:37.436335", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:51.741704", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:51.746106", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:51.749130", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:13:51.751634", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:15:25.270207", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:15:25.277098", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:15:25.282034", "error": "Role ladder inference failed: name 'json' is not defined"}
+{"timestamp": "2025-05-13 04:15:25.282851", "error": "Role ladder inference failed: name 'json' is not defined"}

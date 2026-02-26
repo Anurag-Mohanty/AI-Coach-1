@@ -1,0 +1,11 @@
+
+async-timeout
+djaodjin-pages
+httpx
+openai
+streamlit
+streamlit-option-menu
+aiohttp
+backoff
+resume-parser
+spacy

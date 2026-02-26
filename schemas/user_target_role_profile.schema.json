@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TargetRoleProfile",
+  "type": "object",
+  "required": ["target_role", "required_skills", "domain"],
+  "properties": {
+    "target_role":      { "type": "string" },
+    "required_skills":  { "type": "array", "items": { "type": "string" } },
+    "domain":           { "type": "string" },
+    "tool_expectation": { "type": "array", "items": { "type": "string" } }
+  }
+}

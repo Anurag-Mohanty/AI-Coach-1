@@ -1,0 +1,100 @@
+import json
+from agent_core.agent_logger import log_agent_run, log_error
+from agent_core.global_agent_memory import get_context, store_memory
+from agent_core.downstream_formatter import tag_downstream_fields
+from agent_core.trust_explainability import generate_why_this_output_summary
+from agent_core.timing_utils import track_time
+from agent_core.prompt_builder import build_prompt  # optionally overridden
+from openai import OpenAI
+import os
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+def compose_ladder_prompt(context):
+    title = context.get("current_title", "Product Manager")
+    company = context.get("company_name", "a mid-sized company")
+    company_type = context.get("company_type", "tech startup")
+    industry = context.get("industry", "technology")
+    domain = context.get("domain", "product management")
+    job_function = context.get("job_function", domain)
+    years_exp = context.get("years_experience", "7")
+    org_size = context.get("org_size", "500")
+    target_company = context.get("target_company", "a larger tech firm like Google")
+    target_archetype = context.get("target_role_archetype", "Senior Product Manager")
+    domain_switch = context.get("is_domain_switch", False)
+
+    domain_phrase = f"They are switching into a new domain, so ladder mapping must account for foundational gaps." if domain_switch else "They intend to grow in their current domain."
+
+    prompt = f"""
+You are an expert career strategist who specializes in organizational leveling and promotion readiness mapping.
+
+A user is currently working as a {title} at {company}, which is a {company_type} in the {industry} sector. They have approximately {years_exp} years of experience and operate primarily in the {domain} domain. This company employs roughly {org_size} people, and the user’s functional signals indicate a job function of {job_function}.
+
+Based on trajectory data, the user is looking to switch into {target_company} or similar, aiming for a role like {target_archetype}. {domain_phrase}
+
+Please factor in realistic leveling differences across companies (e.g., Google L5 vs Startup VP), and domain shifts if relevant.
+
+Return structured JSON with:
+- inferred_ladder_level
+- next_logical_level
+- management_signal
+- seniority_score (0–100)
+- progression_velocity
+- ladder_alignment_flag
+- normalization_explanation
+"""
+    return prompt
+
+@track_time("role_ladder_inference")
+def infer_ladder_position(user_id, session_id):
+    agent_name = "role_ladder_agent"
+    subtask_id = "ladder_inference"
+    try:
+        context = get_context(user_id, session_id)
+        prompt = compose_ladder_prompt(context)
+
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a career strategist. Return ONLY valid JSON."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.4
+        )
+        result = json.loads(response.choices[0].message.content)
+
+        tagged_output = tag_downstream_fields(result)
+
+        store_memory(
+            agent_name=agent_name,
+            user_id=user_id,
+            session_id=session_id,
+            subtask_id=subtask_id,
+            function="inference_and_mapping",
+            input_fields=context,
+            output_fields=tagged_output
+        )
+
+        log_agent_run(agent_name, context, tagged_output)
+        generate_why_this_output_summary(
+            agent_name=agent_name,
+            input_summary=str(context),
+            rules_used="LLM with org-type + domain + aspiration normalization",
+            model_confidence="high"
+        )
+
+        return tagged_output
+
+    except Exception as e:
+        log_error(agent_name, str(e))
+        fallback = {
+            "inferred_ladder_level": "unknown",
+            "next_logical_level": "unknown",
+            "seniority_score": 0,
+            "progression_velocity": "unknown",
+            "ladder_alignment_flag": "unclear",
+            "normalization_explanation": "Could not infer due to parsing error",
+            "management_signal": "unknown"
+        }
+        tagged_fallback = tag_downstream_fields(fallback)
+        return tagged_fallback
