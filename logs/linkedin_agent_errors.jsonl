@@ -1,1 +1,0 @@
-{"timestamp": "2025-06-21 07:01:27.263997", "user_id": "test_user_123", "session_id": "test_session_456", "error": "call_llm_model() got an unexpected keyword argument 'model'"}
