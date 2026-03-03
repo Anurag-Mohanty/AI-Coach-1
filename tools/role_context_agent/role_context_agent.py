@@ -45,8 +45,8 @@ async def analyze_role_context(input_bundle: Dict[str, Any], user_id: str = "def
         # Validate required fields
         required_fields = ["title", "company", "domain"]
         input_eval = evaluate_input_completeness(input_bundle, required_fields)
-        if input_eval.get("missing"):
-            return {"error": f"Missing required inputs: {input_eval['missing']}"}
+        if input_eval.get("missing_fields"):
+            return {"error": f"Missing required inputs: {input_eval['missing_fields']}"}
 
         # Generate completion
         messages = [

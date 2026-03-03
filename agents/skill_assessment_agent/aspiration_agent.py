@@ -1,6 +1,6 @@
 import json
 from agent_core.agent_logger import log_agent_run, log_error
-from agent_core.global_agent_memory import store_memory, retrieve_memory
+from agent_core.global_agent_memory import store_memory_sync, get_memory
 from agent_core.input_evaluation import evaluate_input_completeness
 from agent_core.self_learning import learn_from_feedback
 from agent_core.downstream_formatter import format_for_agent
@@ -16,7 +16,7 @@ client = OpenAI()
 def interpret_aspiration(user_id, session_id, resume_data, linkedin_data, role_detail, role_context):
     agent_name = "aspiration_agent"
     try:
-        existing = retrieve_memory(agent_name, user_id, session_id, "aspiration_analysis")
+        existing = get_memory(user_id, session_id).get("aspiration_analysis")
         if existing:
             return existing
 
@@ -30,6 +30,9 @@ def interpret_aspiration(user_id, session_id, resume_data, linkedin_data, role_d
 
         example_output = {
             "target_role_archetype": "IC4 - Senior Product Manager",
+            "target_company_type": "growth-stage fintech startup",
+            "target_domain": "financial technology",
+            "target_org_context": "Series B company (~150 people), high ownership across product and design, fast iteration cycles, regulatory constraints from financial compliance, limited process overhead.",
             "aspiration_category": "Grow in domain + begin leadership",
             "role_delta_summary": "Needs AI upskilling and team coordination experience",
             "domain_shift_signal": False,
@@ -54,6 +57,23 @@ If the user’s trajectory is uncertain, include options like lateral moves, adj
 ## FORMAT:
 Return a structured JSON like this:
 {json.dumps(example_output, indent=2)}
+
+## NEW FIELDS — extract from the user’s stated aspiration_statement:
+
+target_company_type: The type of organization they are targeting.
+  Examples: "healthcare startup", "Fortune 500 retailer", "FAANG tech company", "growth-stage fintech", "enterprise SaaS", "early-stage AI startup".
+  If not explicitly stated, infer from context clues (e.g. "Google" → "FAANG tech company", "a startup" → "early-stage startup").
+
+target_domain: The industry/domain of the target role. May differ from their current domain.
+  Examples: "healthcare technology", "retail tech", "financial technology", "enterprise software".
+
+target_org_context: 1-2 sentences describing what that SPECIFIC role at THAT TYPE of company actually looks like day-to-day.
+  This is the critical differentiator — "VP at a healthcare startup" is completely different from "VP at Google":
+  - "VP at a healthcare startup": High ownership across product + design + research. Every ship decision clears clinical and compliance. Board-level visibility. Fast-moving but regulatory constrained.
+  - "VP at Google": Managing managers across multiple product areas. Navigating org politics at scale, multi-quarter OKR cycles, 6-month stakeholder alignment latency, enormous resource base.
+  - "Sr Director at Walmart Retail": Digital transformation layered on brick-and-mortar DNA. Quarterly physical-retail cycles, massive scale, dual-mode customer (in-store + digital), enterprise procurement timelines.
+  - "PM at a startup": Full ownership, wear many hats, ship fast, limited process, high ambiguity.
+  Name: scope of ownership, org complexity, decision velocity, and domain-specific constraints.
 
 ## ACTUAL USER CONTEXT:
 Resume: {resume_data}
@@ -98,14 +118,14 @@ Be realistic, helpful, and insightful. Focus on goals that are reasonably achiev
 
         formatted_output = output
 
-        store_memory(
-            agent_name=agent_name,
-            user_id=user_id,
-            session_id=session_id,
+        store_memory_sync(
+            agent_name,
+            user_id,
+            session_id,
             subtask_id="aspiration_analysis",
             function="interpret_aspiration",
             input_fields=required_inputs,
-            output_fields=formatted_output
+            output_fields=formatted_output,
         )
 
         update_shared_context(user_id, {

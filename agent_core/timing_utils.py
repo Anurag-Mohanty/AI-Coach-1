@@ -27,7 +27,7 @@ class TimingStats:
         return cls._stats
 
 @contextmanager
-def track_time(category: str, display: bool = True):
+def track_time(category: str, display: bool = False):
     """Context manager to track execution time of a code block"""
     start_time = time.time()
     try:
@@ -45,7 +45,7 @@ def track_time(category: str, display: bool = True):
             except:
                 print(f"⏱️ {category}: {duration:.2f}s")
 
-def timed_function(category: str, display: bool = True):
+def timed_function(category: str, display: bool = False):
     """Decorator to track execution time of a function"""
     def decorator(func):
         @functools.wraps(func)

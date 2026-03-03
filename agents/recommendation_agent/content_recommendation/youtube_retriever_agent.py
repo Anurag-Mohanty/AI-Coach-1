@@ -6,7 +6,15 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from agent_core.timing_utils import timed_function
 
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
-youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+
+def _get_youtube_client():
+    """Build YouTube client lazily — raises graceful error if key missing."""
+    if not YOUTUBE_API_KEY:
+        return None
+    try:
+        return build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+    except Exception:
+        return None
 
 @timed_function("YouTube Retrieval", display=True)
 async def search_youtube_for_task(query: str, context: Dict[str, Any], max_results: int = 3) -> List[Dict]:
@@ -14,6 +22,10 @@ async def search_youtube_for_task(query: str, context: Dict[str, Any], max_resul
     Asynchronously search YouTube for relevant content
     """
     try:
+        youtube = _get_youtube_client()
+        if not youtube:
+            return []
+
         # Run YouTube API call in a thread pool since it's blocking
         loop = asyncio.get_event_loop()
         response = await loop.run_in_executor(

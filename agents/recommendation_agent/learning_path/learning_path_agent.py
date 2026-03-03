@@ -1,7 +1,7 @@
 from agent_core.agent_logger import log_agent_event
 from agent_core.input_evaluation import validate_inputs
 from agent_core.compliance_utils import validate_learning_path
-from agent_core.global_agent_memory import get_context
+from agent_core.global_agent_memory import get_memory
 
 from .intro_agent import generate_intro
 from .path_summary_agent import generate_path_summary
@@ -10,7 +10,7 @@ from .learning_steps_agent import generate_learning_steps
 from .closing_cta_agent import generate_closing_cta
 
 async def recommend_learning_path(user_id, session_id):
-    context = get_context(user_id, session_id)
+    context = get_memory(user_id, session_id)
     context["user_id"] = user_id
     context["session_id"] = session_id
     subtask_id = context.get("subtask", {}).get("id", "default_subtask")

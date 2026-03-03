@@ -19,19 +19,23 @@ GITHUB_HEADERS = {
 }
 
 def generate_github_query(focused_subtask, context):
+    role = context.get("role", "")
     prompt = f"""
-Generate 3 simple and general GitHub search queries to find relevant Python repositories.
+Generate 3 GitHub search queries to find repos, templates, guides, or tools relevant to this task.
 
 Task: {focused_subtask}
-Tools: {', '.join(context['tool_familiarity'])}
-Skills: {', '.join(context['missing_skills'])}
+Role: {role}
+Tools they use: {', '.join(context.get('tool_familiarity', []))}
+Skills they need: {', '.join(context.get('missing_skills', []))}
 
-Return only short search terms, one per line, focusing on core concepts like:
-- Main tools (Tableau, Python)
-- Core tasks (dashboard, automation)
-- Key technical terms (API, data)
+Return only short search terms, one per line. Do NOT restrict to Python.
+Focus on things that would help a professional learn or apply AI to this task:
+- Prompt templates and example workflows
+- Tools, integrations, or frameworks for the task
+- Starter kits or how-to guides
+- Avoid academic papers or pure ML research repos
 
-Make queries broader to find more results.
+Examples of good queries: "ai roadmap prioritization template", "chatgpt product manager prompts", "ai market research automation"
 """
     try:
         response = client.chat.completions.create(
@@ -57,10 +61,10 @@ async def search_github_for_task(focused_subtask, context, max_results=5):
     for query in queries:
         # Simplify query and expand search scope
         params = {
-            "q": f"{query} in:name,description,readme language:python",
+            "q": f"{query} in:name,description,readme",
             "sort": "stars",
             "order": "desc",
-            "per_page": 5  # Limit to top 5 most relevant results
+            "per_page": 5
         }
         print(f"Searching GitHub with query: {query}")
         try:

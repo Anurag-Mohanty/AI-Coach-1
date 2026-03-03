@@ -1,304 +1,331 @@
+import os
+import sys
+
+# Load .env before any other imports — several modules create OpenAI clients at module level
+from dotenv import load_dotenv
+load_dotenv()
+
 import streamlit as st
-import json
-from datetime import datetime, timedelta
 
-from resume_parser import extract_text_from_file  # ✅ PDF/DOCX parsing helper
-from resume_agent import analyze_resume
-from linkedin_agent import analyze_linkedin_profile
-from role_context_agent import analyze_role_context
-from tool_familiarity_agent import infer_and_confirm_tools
-from use_case_agent import generate_ai_use_cases
-from tool_recommender import recommend_tools
-from cultural_alignment_agent import infer_communication_style
-from aspiration_agent import interpret_aspiration
-from role_ladder_agent import map_role_ladder
-from skill_delta_agent import identify_skill_gaps
-from role_details_agent import infer_work_structure
-from use_case_miss_agent import identify_ai_opportunities_from_tasks
-from domain_jump_agent import analyze_domain_jump
-from meta_agent import recommend_learning_path  # Peer pattern agent
-from learning_path_agent import recommend_learning_path as build_learning_path  # Personalized path agent
-from experiment_agent import suggest_experiment
-from follow_up_agent import follow_up_agent
-from feedback_agent import capture_user_feedback
+sys.path.insert(0, os.path.dirname(__file__))
 
-st.set_page_config(page_title="🧠 AI Skill Assessment App", layout="centered")
-st.title("🧠 AI Skill Assessment App")
+from coach.coordinator import CoachCoordinator
+from coach.user_model.store import get_or_create_user, save_user_model, delete_user
+from agent_core.persona_context import clear_user_context
+from agent_core.session_trace import get_trace_json
+from agent_core.llm_tracer import install_tracer
 
-# =============================
-# 📤 RESUME INPUT SECTION
-# =============================
-st.subheader("📤 Upload or Paste Your Resume")
+# Install the LLM call interceptor once at startup — captures every OpenAI
+# call anywhere in the codebase and records it to the session trace.
+install_tracer()
 
-uploaded_resume = st.file_uploader("Upload Resume (.pdf, .docx, .txt)",
-                                   type=["pdf", "docx", "txt"])
-resume_text = ""
+# ── Page config ───────────────────────────────────────────────────────────────
 
-if uploaded_resume:
-    resume_text = extract_text_from_file(uploaded_resume)
-    st.text_area("📄 Extracted Resume Text",
-                 resume_text,
-                 height=200,
-                 disabled=True)
-else:
-    resume_text = st.text_area("📄 Or Paste Resume Text Here", height=200)
+st.set_page_config(
+    page_title="AI Coach",
+    page_icon="🧠",
+    layout="centered",
+    initial_sidebar_state="expanded",
+)
 
-# --- RESUME AGENT TAB ---
-st.subheader("📄 Resume Agent")
+# ── Global styles ──────────────────────────────────────────────────────────────
 
-resume_tabs = st.tabs(
-    ["🔍 Analyze", "🧭 Preview Downstream Usage", "📝 Provide Feedback"])
+st.markdown(
+    """
+    <style>
+    /* Hide Streamlit chrome we don't need */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
 
-with resume_tabs[0]:
-    if resume_text:
-        resume_result = analyze_resume(resume_text)
-        try:
-            parsed_resume = json.loads(resume_result)
-            st.success("Resume analyzed successfully.")
-            st.json(parsed_resume)
-        except:
-            st.error("❌ Failed to parse resume response.")
-            st.text(resume_result)
-            st.stop()
-    else:
-        st.warning("Please upload or paste your resume.")
+    /* Keep the header (and sidebar toggle) visible but shrink it */
+    header[data-testid="stHeader"] {background: transparent; height: 2.5rem;}
 
-with resume_tabs[1]:
-    st.markdown("### 🔄 How Parsed Resume Feeds Other Agents")
+    /* Always show the sidebar collapse/expand toggle */
+    [data-testid="collapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        z-index: 999999 !important;
+    }
 
-    if 'parsed_resume' in locals():
-        st.markdown("#### → Role Context Agent Input")
-        st.code(json.dumps(
-            {
-                "title": parsed_resume.get("title"),
-                "company": parsed_resume.get("company"),
-                "domain": parsed_resume.get("domain")
-            },
-            indent=2),
-                language='json')
+    /* Main content padding */
+    .block-container {padding-top: 1.5rem; padding-bottom: 2rem; max-width: 820px;}
 
-        st.markdown("#### → Tool Familiarity Agent Input")
-        st.code(json.dumps({"tools": parsed_resume.get("tools")}, indent=2),
-                language='json')
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background: #F7F9FF;
+        border-right: 1px solid #E2E8F8;
+    }
+    [data-testid="stSidebar"] .block-container {padding-top: 1rem;}
 
-        st.markdown("#### → Skill Delta Agent Input")
-        st.code(json.dumps(
-            {
-                "seniority": parsed_resume.get("seniority"),
-                "ai_keywords": parsed_resume.get("ai_keywords")
-            },
-            indent=2),
-                language='json')
-    else:
-        st.info("Analyze resume first to preview downstream usage.")
+    /* Trace event rows */
+    .trace-event {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F8;
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin-bottom: 6px;
+        font-size: 0.82em;
+        line-height: 1.5;
+    }
+    .trace-phase-header {
+        font-size: 0.72em;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6B7FCC;
+        margin: 12px 0 6px 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-with resume_tabs[2]:
-    if 'parsed_resume' in locals():
-        st.markdown("### 💬 Review & Give Feedback on Extracted Fields")
 
-        def feedback_field(label, key, default):
-            col1, col2 = st.columns([3, 1])
-            with col1:
-                correction = st.text_input(f"{label} (Detected: {default})",
-                                           key=f"correction_{key}")
-            with col2:
-                thumbs = st.radio("Feedback", ["👍", "👎"], key=f"thumb_{key}")
-            return correction.strip(
-            ) if thumbs == "👎" and correction.strip() else default
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
-        corrected_resume = {}
-        for field in ["title", "seniority", "company", "domain"]:
-            corrected_resume[field] = feedback_field(
-                field.title(), field, parsed_resume.get(field, ""))
+def _init_session(name: str):
+    """Load or create user, spin up coordinator, generate opening message."""
+    user_model, is_returning = get_or_create_user(name)
+    coordinator = CoachCoordinator(user_model)
 
-        corrected_resume["tools"] = parsed_resume.get("tools", [])
-        corrected_resume["ai_keywords"] = parsed_resume.get("ai_keywords", [])
+    with st.spinner(""):
+        opening = coordinator.get_opening_message()
 
-        if not corrected_resume["ai_keywords"]:
-            st.warning(
-                "⚠️ No AI-related terms found in resume. You may want to add some."
+    st.session_state.user_id = user_model["user_id"]
+    st.session_state.user_name = name
+    st.session_state.coordinator = coordinator
+    st.session_state.display_messages = [{"role": "assistant", "content": opening}]
+    st.session_state.last_uploaded_filename = None
+
+
+def _handle_user_turn(user_message: str, file_bytes: bytes = None, filename: str = None):
+    """Send one turn to the coordinator and append results to display_messages."""
+    coordinator: CoachCoordinator = st.session_state.coordinator
+
+    # Show user message immediately
+    with st.chat_message("user"):
+        label = user_message if not file_bytes else f"*[Resume uploaded: {filename}]*"
+        st.markdown(label)
+    st.session_state.display_messages.append({"role": "user", "content": label})
+
+    # Collect intermediate messages emitted during tool execution.
+    # For PRESCRIBE turns this includes:
+    #   [0] pre-message ("On it — building your path for X...")
+    #   [1] formatted_output (full coaching narrative)
+    # For regular HOOK/REVEAL turns the list is empty.
+    intermediate_messages: list[str] = []
+
+    # st.status() shows live pipeline steps (written by prescribe pipeline).
+    # It runs OUTSIDE the chat bubble so intermediate messages and the final
+    # response can each be rendered as separate chat bubbles below.
+    with st.status("Working...", expanded=False) as status_ctx:
+        st.session_state["_status_ctx"] = status_ctx
+        response = coordinator.chat(
+            user_message,
+            file_bytes=file_bytes,
+            filename=filename,
+            on_intermediate_message=intermediate_messages.append,
+        )
+        status_ctx.update(state="complete", expanded=False)
+    st.session_state.pop("_status_ctx", None)
+
+    # Render each message (intermediate + final) as a separate chat bubble.
+    # For regular turns there are no intermediate messages so this behaves
+    # identically to before — one bubble with `response`.
+    all_messages = intermediate_messages + ([response] if response and response.strip() else [])
+    for msg in all_messages:
+        if msg and msg.strip():
+            with st.chat_message("assistant"):
+                st.markdown(msg)
+            st.session_state.display_messages.append({"role": "assistant", "content": msg})
+
+    # Persist user model
+    save_user_model(st.session_state.user_id, coordinator.user_model)
+
+
+# ── Sidebar trace ─────────────────────────────────────────────────────────────
+
+def _render_sidebar():
+    """Render the live agent trace in the sidebar."""
+    coordinator: CoachCoordinator = st.session_state.get("coordinator")
+    if not coordinator:
+        return
+
+    session_id = coordinator.session_id
+    user_name = st.session_state.get("user_name", "")
+    phase = coordinator.user_model.get("coaching_state", {}).get("current_phase", "hook").upper()
+
+    from agent_core.session_trace import get_trace
+
+    with st.sidebar:
+        st.markdown("### 🔭 Agent Trace")
+        st.caption(f"User: **{user_name}** · Phase: **{phase}**")
+
+        events = get_trace(session_id)
+        if not events:
+            st.info("No agent calls yet. Start chatting to see the trace.", icon="💡")
+        else:
+            current_phase = None
+            for ev in events:
+                ev_phase = ev.get("phase", "?")
+                ev_type = ev.get("type", "tool")
+
+                # Phase header when phase changes
+                if ev_phase != current_phase:
+                    current_phase = ev_phase
+                    st.markdown(
+                        f"<div class='trace-phase-header'>— {current_phase} —</div>",
+                        unsafe_allow_html=True,
+                    )
+
+                if ev_type == "llm":
+                    # ── LLM event: expandable with full prompt + response ──────
+                    status_icon = {"ok": "🤖", "error": "❌"}.get(ev["status"], "🔵")
+                    dur = f" {ev['duration_ms']}ms" if ev.get("duration_ms") else ""
+                    model = ev.get("inputs", {}).get("model", "")
+                    model_tag = f" `{model}`" if model else ""
+                    ts = ev.get("timestamp", "")
+                    label = f"{status_icon} {ev['agent']}{dur}{model_tag}"
+
+                    with st.expander(label, expanded=False):
+                        st.caption(f"🕐 {ts}")
+                        if ev.get("error"):
+                            st.error(ev["error"][:300])
+
+                        sys_text = (ev.get("inputs") or {}).get("sys", "")
+                        prompt_text = (ev.get("inputs") or {}).get("prompt", "")
+                        response_text = (ev.get("outputs") or {}).get("response", "")
+
+                        if sys_text:
+                            st.markdown("**📋 System prompt:**")
+                            st.code(sys_text, language=None)
+                        if prompt_text:
+                            st.markdown("**💬 User / input message:**")
+                            st.code(prompt_text, language=None)
+                        if response_text:
+                            st.markdown("**✨ Response:**")
+                            st.code(response_text, language=None)
+
+                else:
+                    # ── Tool event: compact card ──────────────────────────────
+                    icon = {"ok": "✅", "error": "❌", "skip": "⚪"}.get(ev["status"], "🔵")
+                    dur = f"<span style='color:#94A3B8;font-size:0.85em'> {ev['duration_ms']}ms</span>" if ev.get("duration_ms") else ""
+                    ts = f"<span style='color:#CBD5E1;font-size:0.78em'>{ev.get('timestamp','')}</span>"
+
+                    in_parts, out_parts = [], []
+                    for k, v in (ev.get("inputs") or {}).items():
+                        if v is None or v == "" or v == [] or v == {}:
+                            continue
+                        v_str = str(v)[:70] + ("…" if len(str(v)) > 70 else "")
+                        in_parts.append(f"<b>{k}</b>: {v_str}")
+                    for k, v in (ev.get("outputs") or {}).items():
+                        if v is None or v == "" or v == [] or v == {}:
+                            continue
+                        v_str = str(v)[:70] + ("…" if len(str(v)) > 70 else "")
+                        out_parts.append(f"<b>{k}</b>: {v_str}")
+
+                    io_block = ""
+                    if in_parts:
+                        io_block += f"<div style='color:#64748B;font-size:0.8em;margin-top:4px'>↳ in: {'<br>'.join(in_parts)}</div>"
+                    if out_parts:
+                        io_block += f"<div style='color:#3B5BDB;font-size:0.8em'>↳ out: {'<br>'.join(out_parts)}</div>"
+                    if ev.get("error"):
+                        io_block += f"<div style='color:#E53E3E;font-size:0.78em'>⚠ {str(ev['error'])[:150]}</div>"
+
+                    st.markdown(
+                        f"<div class='trace-event'>"
+                        f"{icon} <b>{ev['agent']}</b>{dur} {ts}"
+                        f"{io_block}"
+                        f"</div>",
+                        unsafe_allow_html=True,
+                    )
+
+        st.markdown("---")
+        if events:
+            trace_json = get_trace_json(session_id)
+            st.download_button(
+                label="📋 Export trace (JSON)",
+                data=trace_json,
+                file_name=f"trace_{session_id}.json",
+                mime="application/json",
+                use_container_width=True,
             )
 
-        if not corrected_resume["tools"]:
-            st.warning(
-                "⚠️ No tools were detected. Double check or provide manual list."
-            )
+        st.markdown("---")
+        st.caption("**Danger zone**")
+        if st.button("🗑️ Reset session (wipe all stored data)", use_container_width=True):
+            user_id = st.session_state.get("user_id")
+            if user_id:
+                delete_user(user_id)
+                clear_user_context(user_id)
+            for key in list(st.session_state.keys()):
+                del st.session_state[key]
+            st.rerun()
 
-        st.markdown("#### ✅ Final Corrected Output (used for downstream)")
-        st.json(corrected_resume)
 
-        # Optional: Log corrections
-        if st.button("Save Corrections (Mock)"):
-            st.success("✅ Corrections saved locally.")
-            st.session_state["corrected_resume"] = corrected_resume
-    else:
-        st.info("Analyze resume first to provide feedback.")
+# ── Name screen ───────────────────────────────────────────────────────────────
 
-# =============================
-# 🔗 LINKEDIN INPUT
-# =============================
-linkedin_text = st.text_area("🔗 Paste LinkedIn Profile Text", height=200)
-
-# =============================
-# 🌟 ASPIRATION
-# =============================
-aspiration = st.radio(
-    "🌟 What’s your goal for the next 6–12 months?",
-    ["Get promoted", "Switch domains", "Lateral move", "AI upskilling"])
-
-if st.button("Analyze Profile"):
-    if not resume_text.strip():
-        st.warning("Please upload or paste your resume.")
-    elif not linkedin_text.strip():
-        st.warning("Please paste your LinkedIn profile text.")
-    else:
-        with st.spinner("Analyzing..."):
-
-            # ============================
-            # 🔷 SKILL ASSESSMENT AGENT
-            # ============================
-            st.header("🔷 Skill Assessment Agent")
-
-            st.subheader("📄 Resume Agent")
-            resume_result = analyze_resume(resume_text)
-            try:
-                parsed_resume = json.loads(resume_result)
-                st.json(parsed_resume)
-            except:
-                st.error("❌ Failed to parse resume response.")
-                st.text(resume_result)
-                st.stop()
-
-            st.subheader("🔗 LinkedIn Agent")
-            profile_result = analyze_linkedin_profile(linkedin_text)
-            try:
-                parsed_linkedin = json.loads(profile_result)
-                st.json(parsed_linkedin)
-            except:
-                st.error("❌ Failed to parse LinkedIn response.")
-                st.text(profile_result)
-                st.stop()
-
-            st.subheader("🏢 Role Context Agent")
-            context_result = analyze_role_context(parsed_resume,
-                                                  parsed_linkedin)
-            st.json(context_result)
-
-            st.subheader("🧾 Role Details Agent")
-            role_title = parsed_resume.get("title", "unknown")
-            company_name = parsed_resume.get("company", "unknown")
-            industry = parsed_resume.get("domain", "unknown")
-            work_structure = infer_work_structure(
-                role=role_title,
-                resume=resume_text,
-                linkedin=linkedin_text,
-                role_context=json.dumps(context_result),
-                aspiration=aspiration)
-            try:
-                role_details = json.loads(work_structure)
-                st.json(role_details)
-            except:
-                st.warning("⚠️ Could not parse work structure response.")
-                st.text(work_structure)
-                role_details = {}
-
-            st.subheader("🧰 Tool Familiarity Agent")
-            confirmed_tools = infer_and_confirm_tools(parsed_resume)
-            st.json(confirmed_tools)
-
-            st.subheader("🌐 Cultural Alignment Agent")
-            inferred_style = infer_communication_style(parsed_resume,
-                                                       parsed_linkedin,
-                                                       context_result)
-            st.json(inferred_style)
-
-            # ============================
-            # 🔹 ASPIRATION AGENT
-            # ============================
-            st.header("🔹 Aspiration Agent")
-            aspiration_result = interpret_aspiration(parsed_resume,
-                                                     parsed_linkedin,
-                                                     aspiration)
-            st.json(aspiration_result)
-
-            # ============================
-            # 🔷 GAP ANALYSIS AGENT
-            # ============================
-            st.header("🔷 Gap Analysis Agent")
-
-            st.subheader("📈 Role Ladder Agent")
-            role_ladder = map_role_ladder(parsed_resume, parsed_linkedin,
-                                          aspiration_result)
-            st.json(role_ladder)
-
-            st.subheader("🧠 Skill Delta Agent")
-            skill_gaps = identify_skill_gaps(parsed_resume, aspiration_result,
-                                             role_ladder)
-            st.json(skill_gaps)
-
-            st.subheader("📌 Use Case Miss Agent")
-            if role_details:
-                missed_uses = identify_ai_opportunities_from_tasks(
-                    role_details, confirmed_tools, parsed_resume, industry,
-                    aspiration)
-                st.json(missed_uses)
+def show_name_screen():
+    st.markdown("<br><br><br>", unsafe_allow_html=True)
+    _, col, _ = st.columns([1, 2, 1])
+    with col:
+        st.markdown("## 🧠 AI Coach")
+        st.markdown("Your personalized guide to working smarter with AI.")
+        st.markdown("---")
+        name = st.text_input(
+            "What's your name?",
+            placeholder="e.g. Sarah",
+            label_visibility="visible",
+        )
+        if st.button("Get started →", type="primary", use_container_width=True):
+            if name.strip():
+                _init_session(name.strip())
+                st.rerun()
             else:
-                st.info(
-                    "Skipping use case gap check — no role details available.")
+                st.warning("Please enter your name to continue.")
 
-            st.subheader("🌐 Domain Jump Agent")
-            domain_jump = analyze_domain_jump(parsed_resume, aspiration_result,
-                                              role_ladder)
-            st.json(domain_jump)
 
-            # ============================
-            # 🟢 RECOMMENDATION AGENT
-            # ============================
-            st.header("🟢 Recommendation Agent")
+# ── Chat screen ───────────────────────────────────────────────────────────────
 
-            st.subheader("🚀 Use Case Generator Agent")
-            use_cases = generate_ai_use_cases(parsed_resume)
-            st.markdown(use_cases)
+def show_chat_screen():
+    _render_sidebar()
 
-            st.subheader("🛠️ Tool Recommender Agent")
-            tools = recommend_tools(parsed_resume, use_cases)
-            st.markdown(tools)
+    # Render existing conversation history
+    for msg in st.session_state.display_messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
 
-            st.subheader("📊 Meta Agent: Peer-Informed Learning Path")
-            meta_recommendations = recommend_learning_path(
-                parsed_resume, aspiration_result, role_ladder, confirmed_tools,
-                domain_jump)
-            st.json(meta_recommendations)
+    # Resume uploader — sits between conversation and chat input
+    with st.expander("📎 Attach resume (PDF, DOCX, or TXT)"):
+        uploaded_file = st.file_uploader(
+            "Upload your resume",
+            type=["pdf", "docx", "txt"],
+            label_visibility="collapsed",
+        )
 
-            st.subheader(
-                "📚 Learning Path Agent: Personalized Step-by-Step Plan")
-            learning_path = build_learning_path(parsed_resume,
-                                                aspiration_result, role_ladder,
-                                                confirmed_tools, skill_gaps,
-                                                domain_jump, missed_uses)
-            st.json(learning_path)
+    # Handle new file upload (fires once per unique file)
+    if (
+        uploaded_file is not None
+        and uploaded_file.name != st.session_state.get("last_uploaded_filename")
+    ):
+        st.session_state.last_uploaded_filename = uploaded_file.name
+        file_bytes = uploaded_file.getvalue()
+        _handle_user_turn(
+            "I've uploaded my resume.",
+            file_bytes=file_bytes,
+            filename=uploaded_file.name,
+        )
+        st.rerun()
 
-            # ============================
-            # 🧪 EXPERIMENT & FEEDBACK
-            # ============================
-            st.header("🧪 Experiment & Feedback Loop")
+    # Handle typed message
+    if user_input := st.chat_input("Message your coach..."):
+        _handle_user_turn(user_input)
+        st.rerun()
 
-            st.subheader("🧪 Experiment Agent")
-            experiment = suggest_experiment(missed_uses, confirmed_tools,
-                                            aspiration)
-            st.json(experiment)
 
-            st.subheader("🔁 Follow-Up Agent")
-            mock_last_used_date = datetime.today().date() - timedelta(days=22)
-            mock_feedback = "It was helpful but a bit confusing"
-            followup = follow_up_agent(last_used_tools=confirmed_tools,
-                                       last_used_date=mock_last_used_date,
-                                       feedback_summary=mock_feedback)
-            st.json(followup)
+# ── Entry point ───────────────────────────────────────────────────────────────
 
-            st.subheader("💬 Feedback Agent")
-            feedback_summary = capture_user_feedback(
-                recommendations=learning_path,
-                experiment_result=experiment,
-                follow_up_data=followup)
-            st.json(feedback_summary)
+if "user_id" not in st.session_state:
+    show_name_screen()
+else:
+    show_chat_screen()

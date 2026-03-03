@@ -7,7 +7,7 @@ import openai
 from agent_core.agent_logger import log_agent_run, log_error
 from agent_core.input_evaluation import validate_inputs
 from agent_core.feedback_utils import capture_user_feedback
-from agent_core.global_agent_memory import store_memory, retrieve_memory
+from agent_core.global_agent_memory import store_memory_sync, get_memory
 from agent_core.persona_context import get_user_context
 from agent_core.downstream_formatter import format_for_agent
 from agent_core.timing_utils import timed_function
@@ -24,7 +24,7 @@ def infer_tool_familiarity(user_id: str, session_id: str) -> Dict:
     """
     try:
         # 1. Retrieve full context from global memory
-        context = retrieve_memory("global", user_id, session_id, subtask_id=None)
+        context = get_memory(user_id, session_id)
         persona = get_user_context(user_id)
 
         # 2. Validate critical inputs
@@ -40,7 +40,7 @@ def infer_tool_familiarity(user_id: str, session_id: str) -> Dict:
         structured_output = format_outputs(inferred_tools, context, persona)
 
         # 6. Store output to memory
-        store_memory("tool_familiarity_agent", user_id, session_id, "tool_inference", "infer_tool_familiarity", context, structured_output)
+        store_memory_sync("tool_familiarity_agent", user_id, session_id, "tool_inference", "infer_tool_familiarity", context, structured_output)
 
         # 7. Log agent run
         log_agent_run("tool_familiarity_agent", context, structured_output)
@@ -219,7 +219,7 @@ def store_user_selected_tools(user_id: str, session_id: str, selected_tools: dic
         "tools_by_function": selected_tools,
         "tool_depth_estimate": depth_estimates,
     }
-    store_memory("tool_familiarity_agent", user_id, session_id, "tool_confirmation", {}, payload)
+    store_memory_sync("tool_familiarity_agent", user_id, session_id, "tool_confirmation", "store_user_selected_tools", {}, payload)
 
 
 def process_custom_tool_input(tool_name: str) -> Tuple[bool, str]:

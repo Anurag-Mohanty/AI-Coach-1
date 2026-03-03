@@ -13,7 +13,7 @@ from agent_core.timing_utils import timed_function
 from aiohttp import ClientSession, ClientTimeout
 import backoff
 
-@timed_function("Retrieval Orchestration", display=True)
+@timed_function("Retrieval Orchestration", display=False)
 async def run_retrieval_orchestrator(subtask: str,
                                    context: Dict[str, Any],
                                    user_id: str = "test_user",
@@ -56,9 +56,13 @@ async def run_retrieval_orchestrator(subtask: str,
 
         # Create tasks for each source
         tasks = []
+        # LinkedIn disabled — HTML scraper that breaks without warning when LinkedIn changes DOM.
+        # GitHub re-enabled — but the query generator was hardcoded to Python repos; that's now fixed
+        # in github_retriever_agent.py. Reflection agent filters irrelevant results.
+        source_fns = [search_perplexity, search_youtube_for_task, search_github_for_task]
+
         for query in queries:
-            for source_fn in [search_perplexity, search_youtube_for_task, 
-                            search_github_for_task, run_linkedin_retriever]:
+            for source_fn in source_fns:
                 tasks.append(fetch_with_retry(source_fn, query))
 
         # Process in smaller chunks to avoid overwhelming connections

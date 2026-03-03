@@ -1,6 +1,6 @@
 # research_agent.py (Perplexity-powered, now includes format classification)
 
-from agent_core.global_agent_memory import store_memory, retrieve_memory
+from agent_core.global_agent_memory import store_memory_sync, get_memory
 from .perplexity_search import search_perplexity
 
 # -----------------------------------
@@ -30,7 +30,7 @@ async def run_research_agent(subtask, context, user_id="anon_user", session_id="
     subtask_id = subtask[:40].replace(" ", "_")
 
     # Check memory first
-    prior = retrieve_memory(agent_name, user_id, session_id, subtask_id)
+    prior = get_memory(user_id, session_id).get(subtask_id)
     if prior:
         print("[Memory] Reusing previous research result")
         return prior.get("output_fields", {}).get("results", [])
@@ -44,14 +44,7 @@ async def run_research_agent(subtask, context, user_id="anon_user", session_id="
         item["format"] = classify_format(item.get("link", ""))
 
     # Store to global memory
-    store_memory(
-        agent_name=agent_name,
-        user_id=user_id,
-        session_id=session_id,
-        subtask_id=subtask_id,
-        function="content_discovery",
-        input_fields={"subtask": subtask, **context},
-        output_fields={"results": results}
-    )
+    store_memory_sync(agent_name, user_id, session_id, subtask_id, "content_discovery",
+                      {"subtask": subtask}, {"results": results})
 
     return results

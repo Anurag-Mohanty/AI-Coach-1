@@ -1,0 +1,740 @@
+[
+  {
+    "archetype_id": "senior_pm_healthcare_enterprise",
+    "seniority": "Senior",
+    "domain": "Healthcare",
+    "org_shape": "hierarchical",
+    "role_examples": ["Senior Product Manager at Cigna", "Senior PM at Anthem", "Senior PM at UnitedHealth"],
+    "task_clusters": [
+      {
+        "name": "Stakeholder alignment",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Aligning clinical, legal, compliance, and engineering stakeholders on product decisions — navigating regulatory constraints and risk aversion at every step."
+      },
+      {
+        "name": "Requirements and PRD authoring",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Writing detailed product requirements that satisfy regulatory documentation standards, clinical workflow constraints, and engineering specs simultaneously."
+      },
+      {
+        "name": "Clinical workflow analysis",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Understanding how clinicians and care coordinators interact with systems, mapping friction points, and translating clinical pain into product requirements."
+      },
+      {
+        "name": "Cross-functional sprint planning",
+        "effort_pct": 15,
+        "ai_opportunity": "medium",
+        "description": "Running weekly planning cycles across engineering, design, QA, and compliance — managing dependencies in a compliance-heavy delivery environment."
+      },
+      {
+        "name": "Metric tracking and reporting",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Building and maintaining dashboards to track product KPIs, preparing executive-facing readouts with limited self-serve analytics tooling."
+      }
+    ],
+    "ai_opportunity_density": 0.72,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Stakeholder alignment",
+        "blind_spot": "Stakeholder briefings are written manually from scratch each cycle — no AI-assisted synthesis of cross-functional input, meeting notes, or prior context.",
+        "ai_opportunity": "Use GPT-4 to synthesize cross-functional input and past alignment decisions into structured briefing documents, cutting prep time from hours to 20 minutes."
+      },
+      {
+        "task_cluster": "Requirements and PRD authoring",
+        "blind_spot": "PRDs are written from scratch in Confluence without reusing regulatory patterns from prior approved requirements — each compliance review is treated as new.",
+        "ai_opportunity": "Use AI to draft PRDs from structured input (user story, acceptance criteria, constraint list), auto-tagging compliance clauses from a library of previously approved language."
+      },
+      {
+        "task_cluster": "Metric tracking and reporting",
+        "blind_spot": "Executive readouts are manually assembled from multiple dashboards — no automated narrative synthesis connecting metric changes to product decisions.",
+        "ai_opportunity": "Use Copilot or GPT-4 to generate metric narrative paragraphs from structured data exports, converting raw numbers into decision-ready summaries."
+      }
+    ],
+    "aspiration_patterns": [
+      "Director of Product at healthcare enterprise",
+      "VP of Product at healthcare startup",
+      "Head of Product at digital health company"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "director_healthcare_hierarchical",
+    "seniority": "Director",
+    "domain": "Healthcare",
+    "org_shape": "hierarchical",
+    "role_examples": ["Director of Product Management at Cigna", "Director of Product at Elevance Health", "Director PM at Kaiser"],
+    "task_clusters": [
+      {
+        "name": "Portfolio prioritization",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Evaluating competing initiatives across a portfolio of products, allocating team capacity, and defending prioritization decisions to senior leadership and clinical stakeholders."
+      },
+      {
+        "name": "Cross-team stakeholder management",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Managing relationships across clinical, IT, legal, compliance, and external partners — navigating org politics and competing priorities at the director level."
+      },
+      {
+        "name": "Product strategy and roadmap",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Translating enterprise strategy into 12-18 month product roadmaps that satisfy regulatory constraints, business KPIs, and clinical outcomes goals."
+      },
+      {
+        "name": "Team leadership and coaching",
+        "effort_pct": 15,
+        "ai_opportunity": "low",
+        "description": "Managing 3-6 senior PMs — running 1:1s, setting performance expectations, developing PM craft, and resolving escalations."
+      },
+      {
+        "name": "Executive reporting and communication",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Preparing board-level and C-suite updates on product performance, market positioning, and strategic bets — distilling complex program status into executive narrative."
+      }
+    ],
+    "ai_opportunity_density": 0.75,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Portfolio prioritization",
+        "blind_spot": "Portfolio trade-off analysis is done in spreadsheets manually — no AI-assisted synthesis of competing initiative data, capacity constraints, and business impact estimates.",
+        "ai_opportunity": "Use AI to synthesize initiative briefs, capacity data, and impact estimates into a structured prioritization framework, generating a defensible ranked output with rationale for each decision."
+      },
+      {
+        "task_cluster": "Executive reporting and communication",
+        "blind_spot": "Executive decks are assembled manually from scattered sources — engineering status reports, business metrics, and clinical outcome data are stitched together by hand.",
+        "ai_opportunity": "Use GPT-4 to generate first-draft executive narratives from structured status inputs, converting raw program data into 3-paragraph C-suite summaries with risk flags highlighted."
+      },
+      {
+        "task_cluster": "Cross-team stakeholder management",
+        "blind_spot": "Follow-up documentation after cross-functional alignment meetings is created manually from memory or partial notes, missing decisions and owners.",
+        "ai_opportunity": "Use AI meeting transcription + GPT-4 summarization to auto-generate decision logs, action item trackers, and stakeholder briefing summaries within minutes of each alignment meeting."
+      }
+    ],
+    "aspiration_patterns": [
+      "VP of Product at healthcare enterprise",
+      "VP of Product at healthcare startup",
+      "SVP Product at digital health company"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "vp_product_enterprise",
+    "seniority": "VP",
+    "domain": "any",
+    "org_shape": "hierarchical",
+    "role_examples": ["VP of Product at Cigna", "VP Product at Salesforce", "VP Product Management at UnitedHealth"],
+    "task_clusters": [
+      {
+        "name": "Strategic narrative and vision",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Defining and communicating multi-year product vision to board, C-suite, and customers — synthesizing market signals, competitive intelligence, and internal strategy into a compelling narrative."
+      },
+      {
+        "name": "Cross-portfolio resource allocation",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Managing competing priorities and headcount across multiple product lines — making bet-sizing decisions under resource scarcity with limited bottom-up visibility."
+      },
+      {
+        "name": "Organizational alignment and change management",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Driving org-wide adoption of strategic pivots, aligning engineering, design, and GTM orgs behind evolving product direction across multi-quarter cycles."
+      },
+      {
+        "name": "Executive stakeholder management",
+        "effort_pct": 15,
+        "ai_opportunity": "medium",
+        "description": "Managing up to CEO/board and sideways to CFO/CMO/CTO — navigating org politics, defending resource requests, and maintaining trust across the C-suite."
+      },
+      {
+        "name": "Market and competitive intelligence",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Monitoring competitive landscape, synthesizing analyst reports, customer intelligence, and market signals into strategic input for quarterly planning cycles."
+      }
+    ],
+    "ai_opportunity_density": 0.80,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Strategic narrative and vision",
+        "blind_spot": "Competitive and market intelligence is gathered manually across analyst reports, earnings calls, and press releases — no systematic AI-assisted synthesis into strategic input.",
+        "ai_opportunity": "Use AI to synthesize earnings call transcripts, analyst reports, and news into structured competitive intelligence briefs, cutting research prep from days to hours."
+      },
+      {
+        "task_cluster": "Cross-portfolio resource allocation",
+        "blind_spot": "Portfolio allocation decisions are made from fragmented bottom-up requests without a unified AI-assisted view of impact estimates, risk, and capacity constraints.",
+        "ai_opportunity": "Use GPT-4 to synthesize initiative briefs and capacity data into a structured portfolio view, generating a first-pass allocation recommendation with risk-adjusted ROI for each bet."
+      },
+      {
+        "task_cluster": "Market and competitive intelligence",
+        "blind_spot": "Win/loss analysis and customer signal synthesis happens informally — no systematic aggregation of customer calls, sales notes, and support tickets into strategic insight.",
+        "ai_opportunity": "Use AI to aggregate and synthesize CRM notes, support tickets, and customer call transcripts into structured win/loss intelligence reports, updated weekly automatically."
+      }
+    ],
+    "aspiration_patterns": [
+      "SVP or Chief Product Officer at enterprise",
+      "VP at FAANG tech company",
+      "Founding CPO at growth-stage startup"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "vp_product_startup",
+    "seniority": "VP",
+    "domain": "any",
+    "org_shape": "flat",
+    "role_examples": ["VP of Product at Series B SaaS", "VP Product at health tech startup", "VP Product at fintech startup"],
+    "task_clusters": [
+      {
+        "name": "Product-market fit iteration",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Running rapid discovery → build → measure cycles with a lean team, synthesizing customer feedback, usage data, and sales input into tight sprint priorities."
+      },
+      {
+        "name": "Hands-on product execution",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Writing specs, running standups, reviewing design, and shipping features directly — VP at a startup is still in the product details, not just setting direction."
+      },
+      {
+        "name": "GTM collaboration and customer engagement",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Partnering with sales and CS on deal-specific product questions, customer calls, RFP responses, and roadmap transparency discussions."
+      },
+      {
+        "name": "Hiring and team building",
+        "effort_pct": 15,
+        "ai_opportunity": "low",
+        "description": "Recruiting PMs, defining the product org structure, building PM craft standards from scratch in a company that may have had no formal PM function before."
+      },
+      {
+        "name": "Investor and board communication",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Preparing board deck product sections, KPI updates, and milestone narratives — translating messy execution reality into clean investor-friendly framing."
+      }
+    ],
+    "ai_opportunity_density": 0.78,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Product-market fit iteration",
+        "blind_spot": "Customer discovery synthesis is manual — interview notes, support tickets, and usage data are stored in silos with no AI-assisted cross-source pattern detection.",
+        "ai_opportunity": "Use AI to synthesize customer interview transcripts, Intercom threads, and usage event patterns into a structured PMF signals report, identifying where the product is working and where friction persists."
+      },
+      {
+        "task_cluster": "Hands-on product execution",
+        "blind_spot": "PRDs and specs are written from blank pages — no AI-assisted first draft from structured user story inputs, slowing down a lean team that can't afford long documentation cycles.",
+        "ai_opportunity": "Use GPT-4 to generate PRD first drafts from a structured brief (problem, user, constraints, acceptance criteria), cutting spec-writing time by 60-70% and freeing the team to focus on decisions."
+      },
+      {
+        "task_cluster": "Investor and board communication",
+        "blind_spot": "Board deck product sections are compiled manually from metric dashboards and engineering updates — no AI-assisted narrative synthesis connecting metrics to strategic milestones.",
+        "ai_opportunity": "Use AI to generate board deck narrative paragraphs from structured KPI inputs and milestone notes, producing investor-ready framing in minutes rather than a half-day prep cycle."
+      }
+    ],
+    "aspiration_patterns": [
+      "CPO at growth-stage startup",
+      "VP Product at larger company",
+      "Co-founder with product responsibilities"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "senior_pm_saas_startup",
+    "seniority": "Senior",
+    "domain": "SaaS",
+    "org_shape": "flat",
+    "role_examples": ["Senior PM at B2B SaaS startup", "Senior Product Manager at early-stage enterprise SaaS"],
+    "task_clusters": [
+      {
+        "name": "Customer discovery and validation",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Running customer interviews, synthesizing feedback from sales calls and support, and validating problem hypotheses in a fast-moving startup environment."
+      },
+      {
+        "name": "Roadmap prioritization",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Weighing customer requests, technical debt, and strategic bets with limited data and high ambiguity — making prioritization calls with less process than an enterprise."
+      },
+      {
+        "name": "Feature development and launch",
+        "effort_pct": 25,
+        "ai_opportunity": "medium",
+        "description": "Writing specs, managing build cycles, coordinating with a small cross-functional team, and driving features to launch without a dedicated PMM or launch team."
+      },
+      {
+        "name": "GTM and customer onboarding",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Partnering with sales on product positioning, supporting customer onboarding, and handling deal-specific product questions that don't have formal support processes yet."
+      }
+    ],
+    "ai_opportunity_density": 0.70,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Customer discovery and validation",
+        "blind_spot": "Synthesis of customer interviews and sales call notes is done manually in Notion — no AI-assisted clustering of themes across dozens of conversations.",
+        "ai_opportunity": "Use AI to synthesize call transcripts and sales notes into a structured insight report, clustering themes by user segment and surfacing top 3 unmet needs."
+      },
+      {
+        "task_cluster": "Roadmap prioritization",
+        "blind_spot": "Prioritization frameworks (RICE, MoSCoW) are maintained manually in spreadsheets with subjective scoring — no AI-assisted impact estimation from usage and churn data.",
+        "ai_opportunity": "Use AI to augment RICE scores with usage event data and churn correlation analysis, producing a defensible data-grounded prioritization view with confidence levels."
+      },
+      {
+        "task_cluster": "Feature development and launch",
+        "blind_spot": "Launch prep documentation (release notes, internal enablement, customer FAQs) is written from scratch — no AI-assisted generation from the existing PRD and feature brief.",
+        "ai_opportunity": "Use GPT-4 to generate launch collateral from the PRD — release notes, customer-facing FAQ, internal sales enablement doc — cutting launch prep time by 70%."
+      }
+    ],
+    "aspiration_patterns": [
+      "Head of Product at SaaS startup",
+      "Director of Product at enterprise SaaS",
+      "VP Product at growth-stage startup"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "senior_pm_fintech_enterprise",
+    "seniority": "Senior",
+    "domain": "Fintech",
+    "org_shape": "hierarchical",
+    "role_examples": ["Senior PM at JPMorgan Chase", "Senior Product Manager at Fidelity", "Senior PM at Capital One"],
+    "task_clusters": [
+      {
+        "name": "Regulatory and compliance coordination",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Navigating compliance, legal, and risk reviews for every product change — managing the intersection of product velocity and financial regulatory requirements."
+      },
+      {
+        "name": "Stakeholder alignment",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Aligning business, risk, compliance, technology, and operations on product decisions in a matrixed org with slow decision velocity."
+      },
+      {
+        "name": "Product requirements and documentation",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Writing detailed PRDs, business requirements documents, and compliance documentation that satisfy both regulatory standards and engineering implementation needs."
+      },
+      {
+        "name": "Data and analytics review",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Analyzing transaction data, customer behavior metrics, and risk signals to inform product decisions — working with data teams to define and monitor KPIs."
+      }
+    ],
+    "ai_opportunity_density": 0.73,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Regulatory and compliance coordination",
+        "blind_spot": "Compliance review prep is manual — product changes are documented from scratch without AI-assisted mapping to existing regulatory frameworks or prior approval patterns.",
+        "ai_opportunity": "Use AI to map proposed product changes to relevant regulatory requirements (e.g., BSA/AML, CFPB), flagging compliance risks and drafting preliminary compliance documentation for review."
+      },
+      {
+        "task_cluster": "Product requirements and documentation",
+        "blind_spot": "BRDs are written from scratch, treating each new feature as entirely novel — not reusing approved language patterns from prior regulatory submissions.",
+        "ai_opportunity": "Use AI to generate BRD first drafts by extracting approved language patterns from a library of past compliance-reviewed requirements, reducing legal review cycles."
+      },
+      {
+        "task_cluster": "Stakeholder alignment",
+        "blind_spot": "Decision documentation from cross-functional alignment meetings is inconsistent — outcomes, rationale, and open items are captured manually and often incomplete.",
+        "ai_opportunity": "Use AI meeting transcription to auto-generate decision logs and stakeholder briefing summaries within minutes of alignment meetings, capturing decisions and owners consistently."
+      }
+    ],
+    "aspiration_patterns": [
+      "Director of Product at fintech enterprise",
+      "VP Product at fintech startup",
+      "Head of Product at payments company"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "director_product_saas_matrix",
+    "seniority": "Director",
+    "domain": "SaaS",
+    "org_shape": "matrix",
+    "role_examples": ["Director of Product at Salesforce", "Director PM at ServiceNow", "Director of Product at Adobe"],
+    "task_clusters": [
+      {
+        "name": "Portfolio strategy and roadmap",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Defining 12-18 month product strategy across multiple product areas, navigating competing priorities from sales, engineering, and executive stakeholders in a large matrixed org."
+      },
+      {
+        "name": "Cross-functional leadership",
+        "effort_pct": 25,
+        "ai_opportunity": "medium",
+        "description": "Leading cross-functional pods without direct authority — influencing engineering, design, and data teams across org boundaries in a fast-moving SaaS company."
+      },
+      {
+        "name": "Customer and market intelligence",
+        "effort_pct": 20,
+        "ai_opportunity": "high",
+        "description": "Synthesizing customer interviews, analyst research, competitive intelligence, and sales feedback into product strategy inputs for a highly competitive SaaS market."
+      },
+      {
+        "name": "Product team management and coaching",
+        "effort_pct": 15,
+        "ai_opportunity": "low",
+        "description": "Managing 3-5 PMs, running 1:1s, setting product craft standards, and building team capability in a large org where PM quality is a competitive differentiator."
+      },
+      {
+        "name": "Executive communication",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Preparing quarterly business reviews, OKR updates, and board-facing product narratives — translating complex product progress into executive-ready storytelling."
+      }
+    ],
+    "ai_opportunity_density": 0.76,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Customer and market intelligence",
+        "blind_spot": "Win/loss analysis and competitive intelligence synthesis is manual — scattered across Gong, Salesforce, analyst portals, and ad hoc calls with no systematic aggregation.",
+        "ai_opportunity": "Use AI to aggregate Gong call recordings, competitive tracking notes, and analyst reports into structured weekly competitive intelligence briefs, surfacing top threats and opportunities."
+      },
+      {
+        "task_cluster": "Portfolio strategy and roadmap",
+        "blind_spot": "Roadmap trade-off documentation is implicit — prioritization decisions are made in meetings but not captured in a structured way that builds institutional memory.",
+        "ai_opportunity": "Use AI to generate structured decision documentation from roadmap planning sessions — capturing the options considered, rationale, and dependencies in a format that accelerates future planning cycles."
+      },
+      {
+        "task_cluster": "Executive communication",
+        "blind_spot": "QBR preparation takes multiple days of manual aggregation — metric exports, engineering status pulls, and narrative writing are done separately by hand.",
+        "ai_opportunity": "Use GPT-4 to synthesize structured metric data and milestone inputs into QBR narrative sections, generating board-ready product update paragraphs from raw inputs."
+      }
+    ],
+    "aspiration_patterns": [
+      "VP of Product at enterprise SaaS",
+      "VP Product at growth-stage startup",
+      "Head of Product at AI-native company"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "mid_pm_saas_enterprise",
+    "seniority": "Mid",
+    "domain": "SaaS",
+    "org_shape": "matrix",
+    "role_examples": ["Product Manager at Workday", "PM at HubSpot", "Product Manager at Zendesk"],
+    "task_clusters": [
+      {
+        "name": "Feature scoping and requirements",
+        "effort_pct": 35,
+        "ai_opportunity": "high",
+        "description": "Writing user stories, acceptance criteria, and PRDs for a defined product area — translating stakeholder input and customer feedback into engineering-ready requirements."
+      },
+      {
+        "name": "Sprint and delivery management",
+        "effort_pct": 25,
+        "ai_opportunity": "medium",
+        "description": "Running agile ceremonies, managing the backlog, clearing engineering blockers, and tracking delivery milestones in a structured SDLC environment."
+      },
+      {
+        "name": "Customer discovery",
+        "effort_pct": 20,
+        "ai_opportunity": "high",
+        "description": "Conducting customer interviews, synthesizing support tickets, and analyzing usage data to identify unmet needs and validate upcoming features."
+      },
+      {
+        "name": "Stakeholder communication",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Keeping internal stakeholders (sales, CS, engineering leads) aligned on roadmap status, launch timelines, and trade-off decisions."
+      }
+    ],
+    "ai_opportunity_density": 0.68,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Feature scoping and requirements",
+        "blind_spot": "PRDs and user stories are written from scratch without AI-assisted first drafts — every feature brief starts from a blank Confluence page.",
+        "ai_opportunity": "Use GPT-4 to generate PRD first drafts from structured inputs (problem statement, user segments, constraints, acceptance criteria), cutting spec-writing time by 60%."
+      },
+      {
+        "task_cluster": "Customer discovery",
+        "blind_spot": "Customer interview synthesis is manual — themes from 10-15 calls are captured in personal notes without structured AI-assisted aggregation.",
+        "ai_opportunity": "Use AI to synthesize interview transcripts into a structured insight report, clustering themes by user segment and linking evidence to specific product opportunities."
+      },
+      {
+        "task_cluster": "Sprint and delivery management",
+        "blind_spot": "Sprint review documentation is created manually from memory — what shipped, what didn't, and why is communicated informally without structured outputs.",
+        "ai_opportunity": "Use AI to generate structured sprint retrospective summaries from Jira completion data and team notes, producing stakeholder-ready delivery updates automatically."
+      }
+    ],
+    "aspiration_patterns": [
+      "Senior PM at SaaS company",
+      "Senior PM at startup",
+      "Director of Product at enterprise"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "senior_pm_retail_enterprise",
+    "seniority": "Senior",
+    "domain": "Retail",
+    "org_shape": "hierarchical",
+    "role_examples": ["Senior PM at Walmart", "Senior Product Manager at Target", "Senior PM at Amazon Retail"],
+    "task_clusters": [
+      {
+        "name": "Physical-digital integration",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Bridging in-store and digital experiences — translating physical retail cycles, store operations constraints, and dual-mode customer journeys into product requirements."
+      },
+      {
+        "name": "Merchandising and supply chain collaboration",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Working with merchandising, inventory, and supply chain teams to ensure product features align with physical retail constraints like seasonal cycles and SKU complexity."
+      },
+      {
+        "name": "Customer behavior analysis",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Analyzing large-scale transaction and behavioral data to identify purchase patterns, basket composition signals, and personalization opportunities at massive scale."
+      },
+      {
+        "name": "Stakeholder alignment",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Aligning store operations, buying/merchandising, digital, and technology stakeholders on product changes that touch both physical and digital channels."
+      }
+    ],
+    "ai_opportunity_density": 0.74,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Customer behavior analysis",
+        "blind_spot": "Transaction and behavioral data analysis is delegated entirely to data science — PM can't independently synthesize patterns or validate hypotheses without analyst support.",
+        "ai_opportunity": "Use AI-assisted analytics (Copilot in Power BI, GPT-4 with structured data) to independently generate pattern hypotheses and synthesize behavioral insights without waiting for analyst bandwidth."
+      },
+      {
+        "task_cluster": "Physical-digital integration",
+        "blind_spot": "Documenting dual-mode customer journey requirements (in-store + digital) is manual and time-consuming, often resulting in gaps between channel experiences.",
+        "ai_opportunity": "Use AI to generate unified customer journey documentation from structured input, automatically surfacing cross-channel inconsistencies and flagging integration requirements."
+      },
+      {
+        "task_cluster": "Stakeholder alignment",
+        "blind_spot": "Alignment meetings with store operations and merchandising produce verbal agreements that aren't systematically documented — decisions get revisited repeatedly.",
+        "ai_opportunity": "Use AI meeting transcription to auto-generate decision logs and alignment summaries from cross-functional meetings, reducing revisited decisions and missed commitments."
+      }
+    ],
+    "aspiration_patterns": [
+      "Director of Product at retail/e-commerce",
+      "Head of Product at D2C brand",
+      "VP Product at retail tech company"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "senior_pm_ai_focused",
+    "seniority": "Senior",
+    "domain": "AI",
+    "org_shape": "flat",
+    "role_examples": ["Senior PM at OpenAI", "Senior Product Manager at Cohere", "Senior PM at AI-native startup"],
+    "task_clusters": [
+      {
+        "name": "Model capability scoping",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Translating business requirements into model capability specifications — working closely with ML researchers and engineers on what the model needs to do and how to measure it."
+      },
+      {
+        "name": "AI product evaluation and benchmarking",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Designing evaluation frameworks for AI features — defining success metrics, edge case coverage, and failure modes for probabilistic systems."
+      },
+      {
+        "name": "Customer use case discovery",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Identifying high-value customer workflows that AI can transform — running discovery to find the 20% of use cases that drive 80% of value."
+      },
+      {
+        "name": "Safety and responsible AI",
+        "effort_pct": 15,
+        "ai_opportunity": "medium",
+        "description": "Defining safety guardrails, bias mitigation requirements, and responsible deployment standards for AI features before and after launch."
+      },
+      {
+        "name": "Developer and API product management",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Managing API-first products — defining SDK capabilities, documentation requirements, and developer experience standards for technical customers."
+      }
+    ],
+    "ai_opportunity_density": 0.85,
+    "common_blind_spots": [
+      {
+        "task_cluster": "AI product evaluation and benchmarking",
+        "blind_spot": "Evaluation frameworks rely heavily on human red-teaming without systematic AI-assisted adversarial testing — coverage is limited by team bandwidth.",
+        "ai_opportunity": "Use AI to systematically generate adversarial test cases, edge case scenarios, and failure mode hypotheses at scale, augmenting human red-teaming with automated coverage analysis."
+      },
+      {
+        "task_cluster": "Model capability scoping",
+        "blind_spot": "Capability requirement documents are written narratively without structured traceability from business need → evaluation criteria → model spec.",
+        "ai_opportunity": "Use AI to structure capability requirements into traceable spec documents that link business objectives to evaluation metrics to model behaviors, creating audit-ready capability documentation."
+      },
+      {
+        "task_cluster": "Customer use case discovery",
+        "blind_spot": "Use case discovery synthesis is manual — interviews with enterprise customers produce rich transcripts that take days to synthesize into actionable patterns.",
+        "ai_opportunity": "Use AI to synthesize customer call transcripts into structured use case maps, clustering workflows by AI-readiness, value potential, and implementation complexity."
+      }
+    ],
+    "aspiration_patterns": [
+      "Head of AI Product at tech company",
+      "Director of Product AI at enterprise",
+      "VP Product at AI-native startup"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "director_product_fintech",
+    "seniority": "Director",
+    "domain": "Fintech",
+    "org_shape": "hierarchical",
+    "role_examples": ["Director of Product at Capital One", "Director PM at Stripe", "Director of Product at Plaid"],
+    "task_clusters": [
+      {
+        "name": "Regulatory strategy and compliance",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Owning the regulatory strategy for a portfolio of financial products — navigating CFPB, banking regulators, and state-level compliance requirements across multiple jurisdictions."
+      },
+      {
+        "name": "Risk-adjusted product strategy",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Balancing product velocity against financial, regulatory, and reputational risk — making bet-sizing decisions with enterprise risk and legal as key stakeholders."
+      },
+      {
+        "name": "API and platform product management",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Managing developer-facing API products and financial data infrastructure — defining platform capabilities, partner integration requirements, and developer experience standards."
+      },
+      {
+        "name": "PM team leadership",
+        "effort_pct": 15,
+        "ai_opportunity": "low",
+        "description": "Managing 3-5 PMs, setting product craft standards, running career development conversations, and building a team capable of navigating high-stakes regulatory environments."
+      },
+      {
+        "name": "Executive reporting and board communication",
+        "effort_pct": 10,
+        "ai_opportunity": "high",
+        "description": "Preparing board-level updates on product strategy, regulatory posture, and competitive positioning — translating complex multi-stakeholder program status into investor-ready narrative."
+      }
+    ],
+    "ai_opportunity_density": 0.76,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Regulatory strategy and compliance",
+        "blind_spot": "Regulatory horizon scanning is manual — tracking upcoming rule changes, enforcement actions, and guidance updates across multiple jurisdictions relies on individual monitoring.",
+        "ai_opportunity": "Use AI to systematically monitor regulatory feeds and synthesize upcoming rule changes and enforcement trends into monthly regulatory intelligence briefs for product planning."
+      },
+      {
+        "task_cluster": "Risk-adjusted product strategy",
+        "blind_spot": "Risk assessment documentation for new product features is created from scratch each time without AI-assisted mapping to prior risk reviews or regulatory precedent.",
+        "ai_opportunity": "Use AI to generate risk assessment first drafts by mapping proposed features to existing risk frameworks and flagging precedents from prior regulatory reviews, accelerating legal and risk sign-off."
+      },
+      {
+        "task_cluster": "Executive reporting and board communication",
+        "blind_spot": "Board update product sections are assembled manually from disparate sources — KPI dashboards, engineering status, and regulatory update notes are stitched together by hand.",
+        "ai_opportunity": "Use GPT-4 to generate board deck product narrative paragraphs from structured KPI inputs and program notes, producing investor-ready framing in 30 minutes instead of half a day."
+      }
+    ],
+    "aspiration_patterns": [
+      "VP of Product at fintech company",
+      "CPO at fintech startup",
+      "Head of Product at payments company"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  },
+  {
+    "archetype_id": "head_of_product_startup",
+    "seniority": "Head",
+    "domain": "any",
+    "org_shape": "flat",
+    "role_examples": ["Head of Product at Series A startup", "Head of Product at AI startup", "First PM / Head of Product at early-stage company"],
+    "task_clusters": [
+      {
+        "name": "Product strategy and vision",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Setting product direction for the company — defining the 1-2 year product bet, validating it with customers, and aligning the founding team and early investors."
+      },
+      {
+        "name": "Hands-on product execution",
+        "effort_pct": 30,
+        "ai_opportunity": "high",
+        "description": "Writing specs, running discovery, shipping features, and dogfooding the product directly — Head of Product at an early-stage startup is the product team."
+      },
+      {
+        "name": "Customer development",
+        "effort_pct": 25,
+        "ai_opportunity": "high",
+        "description": "Running deep customer development — frequent customer calls, user research, and hypothesis validation in close collaboration with the founding team."
+      },
+      {
+        "name": "Go-to-market collaboration",
+        "effort_pct": 20,
+        "ai_opportunity": "medium",
+        "description": "Supporting sales and marketing with product positioning, deal-specific product input, and customer-facing roadmap communication in a pre-PMF environment."
+      }
+    ],
+    "ai_opportunity_density": 0.80,
+    "common_blind_spots": [
+      {
+        "task_cluster": "Customer development",
+        "blind_spot": "Customer development synthesis is informal — insights from calls are captured in personal notes and founder Slack threads without structured aggregation or pattern detection.",
+        "ai_opportunity": "Use AI to synthesize call transcripts and interview notes into structured PMF signal reports, clustering evidence by problem validity, solution resonance, and willingness to pay."
+      },
+      {
+        "task_cluster": "Hands-on product execution",
+        "blind_spot": "Everything from spec writing to QA testing to release notes is done manually — no AI-assisted documentation workflow reduces the overhead of wearing all hats in a lean team.",
+        "ai_opportunity": "Use AI throughout the product workflow: GPT-4 for PRD first drafts, AI-assisted test case generation, and automated release note creation from commit history and feature briefs."
+      },
+      {
+        "task_cluster": "Product strategy and vision",
+        "blind_spot": "Competitive analysis is done ad hoc with manual review of competitor sites, G2 reviews, and trial sign-ups — no systematic AI-assisted competitive intelligence workflow.",
+        "ai_opportunity": "Use AI to systematically aggregate competitor pricing pages, G2/Capterra reviews, and job postings into structured competitive intelligence reports updated on a regular cadence."
+      }
+    ],
+    "aspiration_patterns": [
+      "VP of Product at growth-stage startup",
+      "CPO at Series B+ company",
+      "Co-founder with product responsibilities"
+    ],
+    "session_count": 0,
+    "use_cases_chosen": []
+  }
+]

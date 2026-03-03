@@ -26,7 +26,8 @@ def generate_why_this_output_summary(agent_name: str, input_summary: str,
     """
     return (
         f"Based on the provided input, the {agent_name.replace('_', ' ').title()} used the following rules: {', '.join(rules_used)}. "
-        f"The overall model confidence in the accuracy of this result is {round(model_confidence * 100)}%. "
+        f"The overall model confidence in the accuracy of this result is "
+        f"{round(model_confidence * 100) if isinstance(model_confidence, (int, float)) else model_confidence}%. "
         f"This summary was based on: {input_summary}")
 
 

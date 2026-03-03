@@ -53,6 +53,17 @@ def infer_missing_context(user_context):
     return missing
 
 
+def clear_user_context(user_id: str) -> None:
+    """Remove a specific user's persona context (for session reset)."""
+    if not os.path.exists(CONTEXT_FILE):
+        return
+    with open(CONTEXT_FILE, "r") as f:
+        data = json.load(f)
+    data.pop(user_id, None)
+    with open(CONTEXT_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+
 def notify_agents_of_major_context_shift(user_id, change_fields):
     return {
         "user_id": user_id,

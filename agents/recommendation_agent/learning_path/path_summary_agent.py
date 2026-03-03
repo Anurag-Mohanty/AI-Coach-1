@@ -2,7 +2,7 @@ from agent_core.agent_logger import log_agent_event
 from agent_core.self_learning import learn_from_feedback
 from agent_core.feedback_utils import capture_feedback
 from agent_core.trust_explainability import explain_why_included
-from agent_core.global_agent_memory import store_memory, retrieve_memory
+from agent_core.global_agent_memory import store_memory_sync, get_memory
 from openai import OpenAI
 import os
 
@@ -21,7 +21,7 @@ async def generate_path_summary(context):
     function = "narrative_generation"
 
     # Optionally check prior memory (for future use)
-    prior_run = retrieve_memory(agent_name, user_id, session_id, subtask_id)
+    prior_run = get_memory(user_id, session_id).get(subtask_id)
 
     system_prompt = """
     You are an AI career guide explaining how a specific learning path connects to a user's broader goals.
@@ -55,15 +55,8 @@ async def generate_path_summary(context):
 
         log_agent_event("LearningPathAgent.PathSummaryAgent", "Generated path summary successfully")
 
-        store_memory(
-            agent_name=agent_name,
-            user_id=user_id,
-            session_id=session_id,
-            subtask_id=subtask_id,
-            function=function,
-            input_fields={"prompt": user_prompt},
-            output_fields={"summary": summary.strip()}
-        )
+        store_memory_sync(agent_name, user_id, session_id, subtask_id, function,
+                          {"prompt": user_prompt}, {"summary": summary.strip()})
 
         learn_from_feedback(
             agent=agent_name,

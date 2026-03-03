@@ -11,8 +11,34 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # --------------------------------------------
 from agent_core.timing_utils import timed_function
 
-@timed_function("Query Planning", display=True)
+@timed_function("Query Planning", display=False)
 async def generate_search_queries(subtask, context, n=4, print_debug=False):
+    seniority = context.get('seniority', '').lower()
+    is_senior = any(s in seniority for s in ['vp', 'director', 'chief', 'head of', 'principal', 'senior'])
+    seniority_constraint = (
+        "- This person is a senior leader (VP/Director/Principal). Do NOT generate beginner tutorial queries. "
+        "Focus on strategic application: how AI accelerates executive decisions, team leverage, org-level impact, "
+        "and advanced workflows. Avoid 'intro to', 'getting started with', or 'basics of' style queries."
+        if is_senior else
+        "- Focus on practical, hands-on content — tutorials, walkthroughs, and prompt templates "
+        "the user can apply immediately in their daily work."
+    )
+    org_constraints = context.get('org_constraints', '')
+    org_note = f"\n- Org constraints (prefer tools that fit): {org_constraints}" if org_constraints else ""
+
+    # Target role note — generates 1-2 queries specifically at target role level
+    target_role = context.get("target_role_archetype", "")
+    target_delta = context.get("target_role_delta", "")
+    current_role = context.get("role", "")
+    target_note = ""
+    if target_role and target_role.lower() not in current_role.lower():
+        target_note = (
+            f"\n- TARGET ROLE: This person is building toward '{target_role}'. "
+            f"Generate at least 1-2 queries specifically about AI skills or workflows AT THAT LEVEL — "
+            f"not just queries for their current role. "
+            f"{'Gap to close: ' + target_delta if target_delta else ''}"
+        )
+
     prompt = f"""
 You are an expert research strategist for an AI learning platform.
 Your job is to generate {n} smart, focused, platform-searchable queries that can help a user learn how to complete this subtask.
@@ -30,13 +56,13 @@ User Context:
 - Domain: {context.get('domain', 'N/A')}
 - Tools: {', '.join(context.get('tool_familiarity', [])) or 'None'}
 - Missing Skills: {', '.join(context.get('missing_skills', [])) or 'None'}
-- Seniority: {context.get('seniority', 'N/A')}
+- Seniority: {context.get('seniority', 'N/A')}{org_note}{target_note}
 
 Constraints:
 - Every query must be explicitly focused on AI-related workflows, ideally using LLMs, GPT, LangChain, or automation agents, or any AI related concepts or tools.
 - Avoid suggesting learning paths based entirely on legacy tools like Excel, Tableau, SQL, or Zendesk.
 - If you must mention legacy tools, it should be in the context of how AI integrates with them.
-- Assume the user is new to AI and needs simple, guided, non-technical training.
+{seniority_constraint}
 
 
 Each query should sound like something someone would search on YouTube, GitHub, or Google to find:

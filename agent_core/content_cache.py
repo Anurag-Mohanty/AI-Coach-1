@@ -37,17 +37,19 @@ class ContentCache:
         """Store content with rich metadata and context"""
         cache_key = self._generate_cache_key(metadata)
         
-        # Update metadata index with broader context
+        # Update metadata index with broader context.
+        # Use .setdefault() — the index may be a plain dict (loaded from JSON),
+        # not a defaultdict, so missing keys would KeyError without the guard.
         for skill in metadata.get("missing_skills", []):
-            self.metadata_index["skills"][skill].append(cache_key)
+            self.metadata_index["skills"].setdefault(skill, []).append(cache_key)
         for tool in metadata.get("tool_familiarity", []):
-            self.metadata_index["tools"][tool].append(cache_key)
+            self.metadata_index["tools"].setdefault(tool, []).append(cache_key)
         if "domain" in metadata:
-            self.metadata_index["domains"][metadata["domain"]].append(cache_key)
+            self.metadata_index["domains"].setdefault(metadata["domain"], []).append(cache_key)
         if "seniority" in metadata:
-            self.metadata_index["roles"][metadata["seniority"]].append(cache_key)
+            self.metadata_index["roles"].setdefault(metadata["seniority"], []).append(cache_key)
         if subtask:
-            self.metadata_index["subtasks"][subtask].append(cache_key)
+            self.metadata_index["subtasks"].setdefault(subtask, []).append(cache_key)
 
         # Store content with full context
         cache_entry = {
@@ -89,14 +91,21 @@ class ContentCache:
         relevant_keys = set()
         
         # Find relevant cache keys from index
+        # Use .get() with defaults — metadata_index may be a plain dict (loaded from JSON),
+        # not a defaultdict, so missing keys would KeyError without the guard.
+        skills_idx = self.metadata_index.get("skills", {})
+        tools_idx = self.metadata_index.get("tools", {})
+        domains_idx = self.metadata_index.get("domains", {})
+        subtasks_idx = self.metadata_index.get("subtasks", {})
+
         for skill in query_metadata.get("missing_skills", []):
-            relevant_keys.update(self.metadata_index["skills"][skill])
+            relevant_keys.update(skills_idx.get(skill, []))
         for tool in query_metadata.get("tool_familiarity", []):
-            relevant_keys.update(self.metadata_index["tools"][tool])
+            relevant_keys.update(tools_idx.get(tool, []))
         if "domain" in query_metadata:
-            relevant_keys.update(self.metadata_index["domains"][query_metadata["domain"]])
+            relevant_keys.update(domains_idx.get(query_metadata["domain"], []))
         if subtask:
-            relevant_keys.update(self.metadata_index["subtasks"][subtask])
+            relevant_keys.update(subtasks_idx.get(subtask, []))
 
         # Collect and score cached content
         all_results = []

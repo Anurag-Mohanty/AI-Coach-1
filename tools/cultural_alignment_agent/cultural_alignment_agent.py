@@ -4,7 +4,7 @@ import json
 from openai import OpenAI
 from agent_core.agent_logger import log_agent_run, log_error
 from agent_core.feedback_utils import capture_user_feedback
-from agent_core.global_agent_memory import store_memory
+from agent_core.global_agent_memory import store_memory_sync
 from agent_core.input_evaluation import evaluate_input_completeness
 from agent_core.trust_explainability import generate_why_this_output_summary
 from agent_core.downstream_formatter import format_for_agent
@@ -56,8 +56,8 @@ def run_cultural_alignment_agent(user_id, session_id, context_inputs):
             "tone_style": tone_profile.get("tone_style", ""),
             "cultural_profile_tag": output.get("cultural_profile_tag", "")
         }
-        store_memory(agent_name, user_id, session_id, "tone_inference",
-                     context_inputs, formatted_output, output_fields=output_fields)
+        store_memory_sync(agent_name, user_id, session_id, "tone_inference",
+                          "run_cultural_alignment_agent", context_inputs, output_fields)
         log_agent_run(agent_name, context_inputs, formatted_output)
 
         explain = generate_why_this_output_summary(
